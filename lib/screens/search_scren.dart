@@ -99,7 +99,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: ListView.builder(
                                   padding: const EdgeInsets.all(10),
                                   scrollDirection: Axis.vertical,
-                                  physics: NeverScrollableScrollPhysics(),
                                   itemCount: data.length,
                                   itemBuilder: (context, index) {
                                     return Container(
