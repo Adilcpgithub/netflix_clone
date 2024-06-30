@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:netflix_clone/models/movie_detailed_model.dart';
 import 'package:netflix_clone/models/popular_movies.dart';
 import 'package:netflix_clone/models/search_model.dart';
 import 'package:netflix_clone/models/topratedtv.dart';
@@ -61,13 +62,13 @@ class ApiServices {
     throw Exception("Failed to load searched movies");
   }
 
-  Future<PopularMovieSearch> getPopularMovies() async {
+  Future<MovieRecomendationModel> getPopularMovies() async {
     endPoint = "movie/popular";
     final url = "$baseUrl$endPoint$key";
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       print("Success ");
-      return PopularMovieSearch.fromJson(jsonDecode(response.body));
+      return MovieRecomendationModel.fromJson(jsonDecode(response.body));
     }
     throw Exception("Failed to load popular movies");
   }
