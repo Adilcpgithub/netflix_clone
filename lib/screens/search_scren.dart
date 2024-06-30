@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:netflix_clone/common/utils.dart';
 import 'package:netflix_clone/models/search_model.dart';
 import 'package:netflix_clone/models/upcoming_movie.dart';
@@ -89,31 +90,50 @@ class _SearchScreenState extends State<SearchScreen> {
                             children: [
                               SizedBox(height: 30),
                               Text(
-                                'Top Searches',
+                                '  Top Searches',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(height: 20),
                               Container(
-                                height: 200, // Set a height for the ListView
+                                height:
+                                    600, // Increased height for the ListView
                                 child: ListView.builder(
-                                  padding: const EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(5),
                                   scrollDirection: Axis.vertical,
                                   itemCount: data.length,
+                                  physics:
+                                      AlwaysScrollableScrollPhysics(), // Enable scrolling
                                   itemBuilder: (context, index) {
-                                    return Container(
-                                      height: 200,
-                                      padding: EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Image.network(
-                                        "${imageUrl}${data[index].posterPath}",
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return Icon(Icons.error);
-                                        },
-                                      ),
+                                    return Row(
+                                      children: [
+                                        Container(
+                                          height: 150,
+                                          padding: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child: Image.network(
+                                            "${imageUrl}${data[index].posterPath}",
+                                            errorBuilder:
+                                                (context, error, stackTrace) {
+                                              return Icon(Icons.error);
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        SizedBox(
+                                            width: 260,
+                                            child: Text(
+                                              data[index].title,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(fontSize: 18),
+                                            ))
+                                      ],
                                     );
                                   },
                                 ),
