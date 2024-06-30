@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:netflix_clone/common/utils.dart';
+import 'package:netflix_clone/models/popular_movies.dart';
 import 'package:netflix_clone/models/search_model.dart';
 import 'package:netflix_clone/services/api_services.dart';
-import 'package:netflix_clone/widgets/movie_card_widget.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -18,7 +18,7 @@ class _SearchScreenState extends State<SearchScreen> {
   TextEditingController searchController = TextEditingController();
   ApiServices apiServices = ApiServices();
   SearchMovieModel? searchMovieModel;
-  late Future<MovieCardWidget> popularMovies;
+  late Future<PopularMovieSearch> popularMovies;
 
   void search(String query) {
     apiServices.getSearchedMovies(query).then((results) {
@@ -26,6 +26,12 @@ class _SearchScreenState extends State<SearchScreen> {
         searchMovieModel = results;
       });
     });
+  }
+
+  @override
+  void initState() {
+    popularMovies = apiServices.getPopularMovies();
+    super.initState();
   }
 
   @override
@@ -64,7 +70,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             searchController.text.isEmpty
                 ? FutureBuilder(
-                    future: future,
+                    future: popularMovies,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         var data = snapshot.data?.results;
@@ -72,7 +78,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              headLineText,
+                              'Top Searches',
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
