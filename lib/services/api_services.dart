@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:netflix_clone/models/movie_detailed_model.dart';
-import 'package:netflix_clone/models/popular_movies.dart';
 import 'package:netflix_clone/models/search_model.dart';
 import 'package:netflix_clone/models/topratedtv.dart';
 import 'package:netflix_clone/models/upcoming_movie.dart';
